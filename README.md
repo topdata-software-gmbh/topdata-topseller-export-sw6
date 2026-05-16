@@ -92,6 +92,48 @@ This will trigger a download of a CSV file containing topsellers from January 20
 **Integrating with Admin UI:**
 To fully leverage this API endpoint within the Shopware 6 administration, a custom Vue.js-based Admin module would typically be developed. This module would provide a user-friendly interface for selecting date ranges and initiating the download. This frontend development is outside the scope of this plugin's backend implementation but can easily consume the provided API endpoint.
 
+### 3. General Product Export (YAML Configured)
+
+The plugin also includes a robust, YAML-configured CLI command to export all your products, resolving common CSV escaping issues (newlines, commas) associated with Twig-based exports.
+
+**Command:**
+`bin/console topdata:product:export [options]`
+
+**Options:**
+- `--config (-c)`: Path to a custom YAML configuration file. Defaults to the plugin's internal `product_export.yaml`.
+- `--output-path (-o)`: Destination directory for the CSV file.
+- `--language-code (-l)`: Language for translated product fields.
+
+**Defining Columns via YAML:**
+Create a `.yaml` file to define the columns you want to export. It supports dot-notation for nested fields (e.g., `translated.name`, `manufacturer.translated.name`).
+
+```yaml
+columns:
+  - header: "Product Number"
+    field: "productNumber"
+  - header: "Name"
+    field: "translated.name"
+  - header: "Stock"
+    field: "stock"
+```
+
+**Examples:**
+
+*   **Export using default columns to current directory:**
+    ```bash
+    bin/console topdata:product:export
+    ```
+
+*   **Export using custom YAML file and saving to public folder:**
+    ```bash
+    bin/console topdata:product:export --config custom_columns.yaml -o public/exports
+    ```
+
+*   **Export in a specific language:**
+    ```bash
+    bin/console topdata:product:export -l de-DE
+    ```
+
 ## License
 
 MIT

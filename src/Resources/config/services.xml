@@ -27,6 +27,20 @@
 
         <service id="Topdata\TopdataTopsellerExportSW6\Service\DateRangeResolver"/>
 
+        <service id="Topdata\TopdataTopsellerExportSW6\Service\CsvFileWriter"/>
+
+        <service id="Topdata\TopdataTopsellerExportSW6\Service\ProductExportService">
+            <argument type="service" id="product.repository"/>
+            <argument type="service" id="Topdata\TopdataTopsellerExportSW6\Service\CsvFileWriter"/>
+            <argument type="service" id="property_accessor"/>
+        </service>
+
+        <service id="Topdata\TopdataTopsellerExportSW6\Command\Command_ExportProducts">
+            <argument type="service" id="Topdata\TopdataTopsellerExportSW6\Service\ProductExportService"/>
+            <argument type="service" id="language.repository"/>
+            <tag name="console.command"/>
+        </service>
+
         <service id="Topdata\TopdataTopsellerExportSW6\Command\Command_ExportTopsellers">
             <argument type="service" id="Topdata\TopdataTopsellerExportSW6\Service\TopsellerDataService"/>
             <argument type="service" id="Topdata\TopdataTopsellerExportSW6\Service\CsvGenerator"/>

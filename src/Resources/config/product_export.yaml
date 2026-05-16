@@ -1,0 +1,11 @@
+columns:
+  - header: "Product Number"
+    field: "productNumber"
+  - header: "Name"
+    field: "translated.name"
+  - header: "Active"
+    field: "active"
+  - header: "Stock"
+    field: "stock"
+  - header: "Manufacturer"
+    field: "manufacturer.translated.name"
