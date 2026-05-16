@@ -69,13 +69,13 @@ class TopsellerExportCommand extends Command
             )
             ->addOption(
                 'start-date',
-                's',
+                null,
                 InputOption::VALUE_REQUIRED,
                 'Custom start date for the export (YYYY-MM-DD).'
             )
             ->addOption(
                 'end-date',
-                'e',
+                null,
                 InputOption::VALUE_REQUIRED,
                 'Custom end date for the export (YYYY-MM-DD).'
             )
