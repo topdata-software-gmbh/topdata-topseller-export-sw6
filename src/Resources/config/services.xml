@@ -25,10 +25,13 @@
 
         <service id="Topdata\TopdataTopsellerExportSW6\Service\CsvGenerator"/>
 
+        <service id="Topdata\TopdataTopsellerExportSW6\Service\DateRangeResolver"/>
+
         <service id="Topdata\TopdataTopsellerExportSW6\Command\Command_ExportTopsellers">
             <argument type="service" id="Topdata\TopdataTopsellerExportSW6\Service\TopsellerDataService"/>
             <argument type="service" id="Topdata\TopdataTopsellerExportSW6\Service\CsvGenerator"/>
             <argument type="service" id="language.repository"/>
+            <argument type="service" id="Topdata\TopdataTopsellerExportSW6\Service\DateRangeResolver"/>
             <tag name="console.command"/>
         </service>
 

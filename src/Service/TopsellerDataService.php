@@ -5,6 +5,7 @@ namespace Topdata\TopdataTopsellerExportSW6\Service;
 use Doctrine\DBAL\Connection;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Uuid\Uuid;
+use Topdata\TopdataTopsellerExportSW6\Dto\TopsellerItem;
 
 class TopsellerDataService
 {
@@ -29,11 +30,11 @@ class TopsellerDataService
 
         $queryBuilder = $this->connection->createQueryBuilder();
         $queryBuilder
-            ->select([
+            ->select(
                 'product.product_number AS articleNumber',
                 'product_translation.name AS productName',
                 'SUM(lineItem.quantity) AS salesCount',
-            ])
+            )
             ->from('order_line_item', 'lineItem')
             ->innerJoin('lineItem', 'product', 'product', 'lineItem.product_id = product.id')
             ->innerJoin('product', 'product_translation', 'product_translation', 'product.id = product_translation.product_id')
