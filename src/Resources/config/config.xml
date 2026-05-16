@@ -11,4 +11,17 @@
             <label lang="de-DE">Beispiel Konfiguration</label>
         </input-field>
     </card>
+
+    <card>
+        <title>Topseller Export Configuration</title>
+        <title lang="de-DE">Topseller Export Einstellungen</title>
+
+        <input-field type="text">
+            <name>defaultLanguageCode</name>
+            <label>Default Language Code (e.g., en-GB, de-DE)</label>
+            <label lang="de-DE">Standard-Sprachcode (z.B. en-GB, de-DE)</label>
+            <helpText>This language will be used for product names if no language is specified via CLI or API.</helpText>
+            <helpText lang="de-DE">Diese Sprache wird fur Produktnamen verwendet, wenn keine Sprache uber CLI oder API angegeben wird.</helpText>
+        </input-field>
+    </card>
 </config>

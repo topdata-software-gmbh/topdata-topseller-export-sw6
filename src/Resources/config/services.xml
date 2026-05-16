@@ -18,5 +18,27 @@
                 <argument type="service" id="service_container"/>
             </call>
         </service>
+
+        <service id="Topdata\TopdataTopsellerExportSW6\Service\TopsellerDataService">
+            <argument type="service" id="Doctrine\DBAL\Connection"/>
+        </service>
+
+        <service id="Topdata\TopdataTopsellerExportSW6\Service\CsvGenerator"/>
+
+        <service id="Topdata\TopdataTopsellerExportSW6\Command\TopsellerExportCommand">
+            <argument type="service" id="Topdata\TopdataTopsellerExportSW6\Service\TopsellerDataService"/>
+            <argument type="service" id="Topdata\TopdataTopsellerExportSW6\Service\CsvGenerator"/>
+            <argument type="service" id="language.repository"/>
+            <tag name="console.command"/>
+        </service>
+
+        <service id="Topdata\TopdataTopsellerExportSW6\Controller\Admin\TopsellerExportController" public="true">
+            <argument type="service" id="Topdata\TopdataTopsellerExportSW6\Service\TopsellerDataService"/>
+            <argument type="service" id="Topdata\TopdataTopsellerExportSW6\Service\CsvGenerator"/>
+            <argument type="service" id="language.repository"/>
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
     </services>
 </container>
