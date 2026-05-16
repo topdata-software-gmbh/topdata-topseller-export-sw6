@@ -15,11 +15,14 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Topdata\TopdataTopsellerExportSW6\Service\CsvGenerator;
 use Topdata\TopdataTopsellerExportSW6\Service\TopsellerDataService;
 
+/**
+ * 05/2026 created
+ */
 #[AsCommand(
     name: 'topdata:topseller:export',
     description: 'Exports topseller product data to a CSV file.'
 )]
-class TopsellerExportCommand extends Command
+class Command_ExportTopsellers extends Command
 {
     public const DATE_RANGE_TODAY = 'TODAY';
     public const DATE_RANGE_YESTERDAY = 'YESTERDAY';

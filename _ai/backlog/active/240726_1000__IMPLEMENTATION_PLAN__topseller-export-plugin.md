@@ -285,12 +285,12 @@ Register the newly created services so they can be dependency-injected.
 
 This phase focuses on creating a robust command-line interface for exporting topseller data. This command will integrate the services from Phase 1 and provide flexible options for date ranges, language, and output path.
 
-**2.1. Rename `src/Command/ExampleCommand.php` to `src/Command/TopsellerExportCommand.php`**
+**2.1. Rename `src/Command/ExampleCommand.php` to `src/Command/Command_ExportTopsellers.php`**
 The existing example command will be repurposed for the topseller export functionality.
 
 [DELETE] `src/Command/ExampleCommand.php` (will be re-created with new content)
 
-[NEW FILE] `src/Command/TopsellerExportCommand.php`
+[NEW FILE] `src/Command/Command_ExportTopsellers.php`
 ```php
 <?php declare(strict_types=1);
 
@@ -315,7 +315,7 @@ use Topdata\TopdataTopsellerExportSW6\Service\TopsellerDataService;
     name: 'topdata:topseller:export',
     description: 'Exports topseller product data to a CSV file.'
 )]
-class TopsellerExportCommand extends Command
+class Command_ExportTopsellers extends Command
 {
     // Date range presets
     public const DATE_RANGE_TODAY = 'TODAY';
@@ -598,7 +598,7 @@ Update the service definition for the command to use the new class and inject de
         <service id="Topdata\TopdataTopsellerExportSW6\Service\CsvGenerator"/>
 
         <!-- New Topseller Export Command -->
-        <service id="Topdata\TopdataTopsellerExportSW6\Command\TopsellerExportCommand">
+        <service id="Topdata\TopdataTopsellerExportSW6\Command\Command_ExportTopsellers">
             <argument type="service" id="Topdata\TopdataTopsellerExportSW6\Service\TopsellerDataService"/>
             <argument type="service" id="Topdata\TopdataTopsellerExportSW6\Service\CsvGenerator"/>
             <argument type="service" id="language.repository"/>
@@ -758,7 +758,7 @@ Register the new Admin API controller.
         <service id="Topdata\TopdataTopsellerExportSW6\Service\CsvGenerator"/>
 
         <!-- New Topseller Export Command -->
-        <service id="Topdata\TopdataTopsellerExportSW6\Command\TopsellerExportCommand">
+        <service id="Topdata\TopdataTopsellerExportSW6\Command\Command_ExportTopsellers">
             <argument type="service" id="Topdata\TopdataTopsellerExportSW6\Service\TopsellerDataService"/>
             <argument type="service" id="Topdata\TopdataTopsellerExportSW6\Service\CsvGenerator"/>
             <argument type="service" id="language.repository"/>
@@ -969,7 +969,7 @@ The "Topdata Topseller Export SW6" plugin has been successfully implemented to e
 - `src/Dto/TopsellerItem.php`: Data Transfer Object to encapsulate topseller product information.
 - `src/Service/TopsellerDataService.php`: Service responsible for querying and aggregating topseller data from the Shopware database.
 - `src/Service/CsvGenerator.php`: Service for converting an array of topseller data into a formatted CSV string.
-- `src/Command/TopsellerExportCommand.php`: CLI command for executing topseller exports with various options.
+- `src/Command/Command_ExportTopsellers.php`: CLI command for executing topseller exports with various options.
 - `src/Controller/Admin/TopsellerExportController.php`: Admin API endpoint to trigger manual topseller exports and download CSVs.
 
 **Modified Files:**
@@ -978,7 +978,7 @@ The "Topdata Topseller Export SW6" plugin has been successfully implemented to e
 - `README.md`: Significantly updated to include detailed usage instructions for both the CLI command and the Admin API endpoint, along with examples.
 
 **Deleted Files:**
-- `src/Command/ExampleCommand.php`: Replaced by `src/Command/TopsellerExportCommand.php` with the new functionality.
+- `src/Command/ExampleCommand.php`: Replaced by `src/Command/Command_ExportTopsellers.php` with the new functionality.
 
 ## Key Changes
 
@@ -999,7 +999,7 @@ The "Topdata Topseller Export SW6" plugin has been successfully implemented to e
 - **Direct DBAL Connection for Topsellers:** Decided to use Doctrine DBAL `Connection` directly in `TopsellerDataService` for querying topseller data. This allows for more efficient aggregation and complex joins than typically achievable with the `EntityRepository` and `Criteria` alone for this specific use case, which requires `SUM()` and `GROUP BY`.
 - **`php://temp` for CSV Generation:** Used `php://temp` stream wrapper in `CsvGenerator` for efficient in-memory CSV generation, avoiding direct string concatenation for large datasets.
 - **`DateTimeImmutable` for Date Handling:** All date-time operations use `DateTimeImmutable` for immutability and safer date manipulations.
-- **Separation of Concerns (SOLID):** The plugin adheres to SOLID principles by separating data retrieval (`TopsellerDataService`), CSV formatting (`CsvGenerator`), command-line interaction (`TopsellerExportCommand`), and Admin API interaction (`TopsellerExportController`) into distinct services and controllers.
+- **Separation of Concerns (SOLID):** The plugin adheres to SOLID principles by separating data retrieval (`TopsellerDataService`), CSV formatting (`CsvGenerator`), command-line interaction (`Command_ExportTopsellers`), and Admin API interaction (`TopsellerExportController`) into distinct services and controllers.
 
 ## Testing Notes
 

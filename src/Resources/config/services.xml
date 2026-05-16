@@ -25,7 +25,7 @@
 
         <service id="Topdata\TopdataTopsellerExportSW6\Service\CsvGenerator"/>
 
-        <service id="Topdata\TopdataTopsellerExportSW6\Command\TopsellerExportCommand">
+        <service id="Topdata\TopdataTopsellerExportSW6\Command\Command_ExportTopsellers">
             <argument type="service" id="Topdata\TopdataTopsellerExportSW6\Service\TopsellerDataService"/>
             <argument type="service" id="Topdata\TopdataTopsellerExportSW6\Service\CsvGenerator"/>
             <argument type="service" id="language.repository"/>
