@@ -1,5 +1,5 @@
 {
-    "name":        "topdata/topseller-export-sw6",
+    "name":        "topdata/topdata-topseller-export-sw6",
     "description": "Topdata Topseller Export SW6",
     "version":     "v1.0.0",
     "type":        "shopware-platform-plugin",
