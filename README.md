@@ -105,16 +105,20 @@ The plugin also includes a robust, YAML-configured CLI command to export all you
 - `--language-code (-l)`: Language for translated product fields.
 
 **Defining Columns via YAML:**
-Create a `.yaml` file to define the columns you want to export. It supports dot-notation for nested fields (e.g., `translated.name`, `manufacturer.translated.name`).
+Create a `.yaml` file to define the columns you want to export. It supports dot-notation for object properties and bracket-notation for array access (e.g., `translated[name]`, `manufacturer.translated[name]`).
 
 ```yaml
 columns:
   - header: "Product Number"
     field: "productNumber"
   - header: "Name"
-    field: "translated.name"
+    field: "translated[name]"
+  - header: "Active"
+    field: "active"
   - header: "Stock"
     field: "stock"
+  - header: "Manufacturer"
+    field: "manufacturer.translated[name]"
 ```
 
 **Examples:**
