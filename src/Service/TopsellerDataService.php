@@ -24,36 +24,41 @@ class TopsellerDataService
         \DateTimeInterface $endDate,
         ?string $languageId = null
     ): array {
+        $defaultLanguageId = $this->getDefaultLanguageId();
+
         if ($languageId === null) {
-            $languageId = $this->getDefaultLanguageId();
+            $languageId = $defaultLanguageId;
         }
 
         $queryBuilder = $this->connection->createQueryBuilder();
         $queryBuilder
             ->select(
                 'product.product_number AS articleNumber',
-                'product_translation.name AS productName',
+                'COALESCE(pt_requested.name, pt_default.name) AS productName',
                 'SUM(lineItem.quantity) AS salesCount',
             )
             ->from('order_line_item', 'lineItem')
             ->innerJoin('lineItem', 'product', 'product', 'lineItem.product_id = product.id')
-            ->innerJoin('product', 'product_translation', 'product_translation', 'product.id = product_translation.product_id')
+            ->leftJoin('product', 'product_translation', 'pt_requested',
+                'product.id = pt_requested.product_id AND product.version_id = pt_requested.product_version_id AND pt_requested.language_id = :languageId')
+            ->leftJoin('product', 'product_translation', 'pt_default',
+                'product.id = pt_default.product_id AND product.version_id = pt_default.product_version_id AND pt_default.language_id = :defaultLanguageId')
             ->innerJoin('lineItem', '`order`', '`order`', 'lineItem.order_id = `order`.id')
             ->where('lineItem.type = :productLineItemType')
             ->andWhere('lineItem.product_id IS NOT NULL')
             ->andWhere('`order`.order_date BETWEEN :startDate AND :endDate')
-            ->andWhere('product_translation.language_id = :languageId')
             ->andWhere('`order`.version_id = :liveVersionId')
             ->andWhere('lineItem.version_id = :liveVersionId')
             ->andWhere('product.version_id = :liveVersionId')
-            ->groupBy('product.id, product_translation.name, product.product_number')
+            ->groupBy('product.id, product.product_number')
             ->orderBy('salesCount', 'DESC')
-            ->addOrderBy('product_translation.name', 'ASC')
+            ->addOrderBy('productName', 'ASC')
             ->setParameters([
                 'productLineItemType' => 'product',
                 'startDate' => $startDate->format(Defaults::STORAGE_DATE_FORMAT),
                 'endDate' => $endDate->format(Defaults::STORAGE_DATE_FORMAT),
                 'languageId' => Uuid::fromHexToBytes($languageId),
+                'defaultLanguageId' => Uuid::fromHexToBytes($defaultLanguageId),
                 'liveVersionId' => Uuid::fromHexToBytes(Defaults::LIVE_VERSION),
             ]);
 
