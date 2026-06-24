@@ -19,6 +19,11 @@
 This plugin provides functionality to export best-selling product data (topsellers) to a CSV file.
 It supports both command-line interface (CLI) and an Admin API endpoint for manual exports from the Shopware 6 administration.
 
+Additionally, it enhances the Shopware 6 admin interface with:
+
+- **Bestseller View** — a dedicated admin module to view topsellers by week/month directly in the administration panel.
+- **Order List Extension** — adds a "Payment method" column to the admin order list.
+
 ### Exported Data Columns
 
 - `articleNumber`: The product's article number.
@@ -139,6 +144,26 @@ columns:
     ```bash
     bin/console topdata:product:export -l de-DE
     ```
+
+### 4. Admin Bestseller View
+
+The plugin registers a **Bestsellers** module under **Orders** in the Shopware admin navigation. It provides a real-time view of top-selling products with weekly and monthly periods.
+
+**Features:**
+- **Week/Month toggle** — switch between weekly and monthly bestseller views.
+- **Navigation arrows** — browse forward/backward through periods.
+- **Real-time data** — fetches data on-demand from the backend API.
+
+**Endpoint (used by the module):**
+`GET /api/topdata/topseller-export/topsellers?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD&languageCode=…`
+
+This returns a JSON response with `articleNumber`, `productName`, and `salesCount` for each product within the given date range.
+
+### 5. Admin Order List Extension
+
+The plugin extends the admin order list (`sw-order-list`) with a **Payment method** column, showing the payment method used for each order.
+
+This column appears automatically after the plugin is installed and activated — no additional configuration required.
 
 ## License
 
