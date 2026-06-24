@@ -1,5 +1,7 @@
 # Topdata Topseller Export SW6
 
+> **Note:** This plugin is planned to be renamed (e.g., to `topdata-better-orders-sw6` or similar) as it now includes general admin order improvements beyond topseller export.
+
 ![Plugin Icon](src/Resources/config/plugin.png)
 
 ## Installation

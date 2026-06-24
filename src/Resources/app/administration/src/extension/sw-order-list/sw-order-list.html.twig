@@ -1,0 +1,9 @@
+{% block sw_order_list_grid_columns %}
+    {% parent %}
+
+    {% block sw_order_list_grid_columns_payment_method %}
+    <template #column-primaryOrderTransaction.paymentMethod.name="{ item }">
+        {{ item.primaryOrderTransaction?.paymentMethod?.translated?.name }}
+    </template>
+    {% endblock %}
+{% endblock %}

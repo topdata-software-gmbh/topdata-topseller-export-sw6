@@ -1,0 +1,58 @@
+<sw-page class="topdata-topseller-view">
+    <template #smart-bar-header>
+        <h2>{{ $tc('topdata-topseller-view.list.title') }}</h2>
+    </template>
+
+    <template #smart-bar-actions>
+        <sw-button @click="switchMode('week')" :variant="viewMode === 'week' ? 'primary' : 'ghost'" size="small">
+            {{ $tc('topdata-topseller-view.list.week') }}
+        </sw-button>
+        <sw-button @click="switchMode('month')" :variant="viewMode === 'month' ? 'primary' : 'ghost'" size="small">
+            {{ $tc('topdata-topseller-view.list.month') }}
+        </sw-button>
+    </template>
+
+    <template #content>
+        <sw-card-view>
+            <sw-card :title="periodLabel" :is-loading="isLoading">
+                <template #toolbar>
+                    <sw-button-group>
+                        <sw-button @click="navigate(-1)" size="small">
+                            <sw-icon name="regular-chevron-left" />
+                        </sw-button>
+                        <sw-button @click="navigate(1)" size="small">
+                            <sw-icon name="regular-chevron-right" />
+                        </sw-button>
+                    </sw-button-group>
+                </template>
+
+                <sw-data-grid
+                    v-if="items.length > 0"
+                    :data-source="items"
+                    :columns="[
+                        { property: 'articleNumber', label: $tc('topdata-topseller-view.list.columnArticleNumber'), allowResize: true },
+                        { property: 'productName', label: $tc('topdata-topseller-view.list.columnProductName'), allowResize: true },
+                        { property: 'salesCount', label: $tc('topdata-topseller-view.list.columnSalesCount'), align: 'right', allowResize: true },
+                    ]"
+                    :is-loading="isLoading"
+                    :compact-mode="true"
+                    :show-selection="false"
+                    :show-actions="false"
+                    identifier="topdata-topseller-view"
+                >
+                    <template #column-salesCount="{ item }">
+                        <sw-label variant="primary" appearance="pill" :size="'small'">
+                            {{ item.salesCount }}
+                        </sw-label>
+                    </template>
+                </sw-data-grid>
+
+                <sw-empty-state
+                    v-else-if="!isLoading"
+                    :title="$tc('topdata-topseller-view.list.empty')"
+                    :show-description="false"
+                />
+            </sw-card>
+        </sw-card-view>
+    </template>
+</sw-page>

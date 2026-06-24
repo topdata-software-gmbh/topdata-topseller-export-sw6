@@ -1,0 +1,26 @@
+{
+    "topdata-topseller-export-sw6": {
+        "list": {
+            "columnPaymentMethod": "Payment method"
+        }
+    },
+    "topdata-topseller-view": {
+        "module": {
+            "title": "Bestsellers",
+            "name": "Bestsellers",
+            "description": "View weekly and monthly bestsellers"
+        },
+        "list": {
+            "title": "Bestsellers",
+            "week": "Week",
+            "month": "Month",
+            "columnArticleNumber": "Article number",
+            "columnProductName": "Product name",
+            "columnSalesCount": "Sold",
+            "empty": "No sales data for this period"
+        },
+        "messages": {
+            "error": "Could not load bestseller data."
+        }
+    }
+}
