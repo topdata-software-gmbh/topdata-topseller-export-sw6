@@ -128,6 +128,9 @@ Component.register('topdata-topseller-view', {
                         endDate: this.endDate,
                         languageCode: language,
                     },
+                    headers: {
+                        Authorization: `Bearer ${Shopware.Service('loginService').getToken()}`,
+                    },
                 })
                 .then((response) => {
                     this.items = response.data.data || [];
